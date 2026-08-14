@@ -34,20 +34,6 @@
   }
   a{color:inherit; text-decoration:none;}
 
-
-  /* Véu global muito sutil para preservar a leitura sobre o shader */
-  body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-    background:radial-gradient(circle at 50% 35%, rgba(5,15,38,.05), rgba(2,8,22,.20) 75%);
-  }
-  #entry, nav, #site{ position:relative; }
-  #entry{ z-index:100; }
-  nav{ z-index:59; }
-  #site{ z-index:1; }
   /* ===== ENTRY SCREEN ===== */
   #entry{
     position:fixed;
@@ -345,22 +331,6 @@
     background:rgba(194,161,107,0.08);
     border-color:var(--gold);
   }
-
-  /* ===== FUNDO ANIMADO GLOBAL ===== */
-  #global-shader{
-    position:fixed;
-    inset:0;
-    width:100vw;
-    height:100vh;
-    display:block;
-    z-index:0;
-    pointer-events:none;
-    opacity:1;
-  }
-  #site{ position:relative; z-index:1; background:transparent; }
-  section, footer{ background:transparent !important; }
-  section{ border-bottom:none !important; }
-  nav{ background:linear-gradient(180deg, rgba(5,15,38,.72), rgba(5,15,38,.12)); }
 
   /* SOBRE */
   .about-grid{
@@ -709,22 +679,9 @@
     justify-content:space-between;
     font-size:0.72rem;
     color:var(--ink-faint);
-    border-top:none;
+    border-top:1px solid var(--line);
     flex-wrap:wrap;
     gap:10px;
-  }
-
-  @media (max-width:800px){
-    .hero{ min-height:88vh; }
-    .hero-content{ max-width:100%; }
-    .location-content{ grid-template-columns:1fr; gap:42px; padding:0 22px; }
-    .location{ padding:85px 0; }
-    .location-map{ height:360px; }
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    #global-shader{ display:none; }
-    body{ background:radial-gradient(circle at 70% 30%, #12385a 0%, #050F26 55%, #030A1A 100%); }
   }
 
   @media (max-width:720px){
@@ -735,10 +692,85 @@
     section{ padding:90px 22px; }
     .nav-links{ gap:16px; }
   }
+
+
+/* ===== LOCALIZAÇÃO ===== */
+.location {
+  padding: 110px 0;
+  background: var(--bg-panel);
+}
+.location-content {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 70px;
+  align-items: center;
+}
+.location-info h2 {
+  margin: 14px 0 20px;
+  color: var(--ink);
+}
+.location-description {
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  color: var(--ink-dim);
+}
+.location-address {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+.location-icon {
+  font-size: 25px;
+  line-height: 1;
+}
+.location-address strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.location-address p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.location-button {
+  display: inline-flex;
+  text-decoration: none;
+}
+.location-map {
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 50px var(--shadow);
+}
+.location-map iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  filter: invert(92%) hue-rotate(180deg) contrast(90%) brightness(95%);
+}
+@media (max-width: 800px) {
+  .location { padding: 80px 0; }
+  .location-content {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    padding: 0 22px;
+  }
+  .location-info { text-align: left; }
+  .location-description { max-width: none; }
+  .location-map { height: 350px; border-radius: 16px; }
+}
 </style>
 </head>
 <body>
-  <canvas id="global-shader" aria-hidden="true"></canvas>
 
   <!-- ===== TELA DE ENTRADA (CARTÃO DE VISITA) ===== -->
   <div id="entry">
@@ -777,17 +809,15 @@
     <div class="nav-overlay" id="nav-overlay"></div>
 
     <section class="hero">
-      <div class="hero-content">
-        <div class="hero-eyebrow">FC Finance · Consultoria em Crédito</div>
-        <h1>A ponte entre você e a <em>melhor condição</em> de crédito.</h1>
-        <p>Trabalhamos com mais de 15 instituições financeiras para comparar taxas e prazos, e entregar a melhor condição possível — em consórcio de veículos, imóveis, e em breve financiamento e empréstimo.</p>
-        <div class="hero-badges">
-          <span>✓ Comparação entre 15+ instituições</span>
-          <span>✓ Sem custo na simulação</span>
-          <span>✓ Atendimento pelo WhatsApp</span>
-        </div>
-        <a href="#contato" class="hero-cta">Vamos conversar →</a>
+      <div class="hero-eyebrow">FC Finance · Consultoria em Crédito</div>
+      <h1>A ponte entre você e a <em>melhor condição</em> de crédito.</h1>
+      <p>Trabalhamos com mais de 15 instituições financeiras para comparar taxas e prazos, e entregar a melhor condição possível — em consórcio de veículos, imóveis, e em breve financiamento e empréstimo.</p>
+      <div class="hero-badges">
+        <span>✓ Comparação entre 15+ instituições</span>
+        <span>✓ Sem custo na simulação</span>
+        <span>✓ Atendimento pelo WhatsApp</span>
       </div>
+      <a href="#contato" class="hero-cta">Vamos conversar →</a>
     </section>
 
     <section id="sobre">
@@ -961,22 +991,32 @@
 
     <section id="localizacao" class="location">
       <div class="location-content">
+
         <div class="location-info">
           <span class="section-eyebrow">Onde estamos</span>
           <h2>Visite nosso <em>escritório</em>.</h2>
-          <p class="location-description">Estamos no DF Plaza Shopping, em Águas Claras. Será um prazer receber você.</p>
+          <p class="location-description">
+            Estamos no DF Plaza Shopping, em Águas Claras.
+            Será um prazer receber você.
+          </p>
+
           <div class="location-address">
-            <span class="location-icon">⌖</span>
+            <span class="location-icon">📍</span>
             <div>
               <strong>Endereço do nosso escritório</strong>
               <p>DF Plaza Shopping<br>Águas Claras — Brasília/DF</p>
             </div>
           </div>
-          <a href="https://www.google.com.br/maps/place/DF+Plaza+Shopping/@-15.8317075,-48.0439203,17z" target="_blank" rel="noopener" class="btn-primary location-button">Como chegar pelo Google Maps →</a>
+
+          <a href="https://www.google.com.br/maps/place/DF+Plaza+Shopping/@-15.8317075,-48.0439203,17z" target="_blank" rel="noopener" class="btn-primary location-button">
+            Como chegar pelo Google Maps →
+          </a>
         </div>
+
         <div class="location-map">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.473205527632!2d-48.043920325088315!3d-15.831707484813911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a325f42832ad3%3A0x59143e7a3f584efa!2sDF%20Plaza%20Shopping!5e0!3m2!1spt-BR!2sbr!4v1786644989005!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Localização da FC Finance"></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.473205527632!2d-48.043920325088315!3d-15.831707484813911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a325f42832ad3%3A0x59143e7a3f584efa!2sDF%20Plaza%20Shopping!5e0!3m2!1spt-BR!2sbr!4v1786644989005!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
+
       </div>
     </section>
 
@@ -1058,124 +1098,6 @@
   }
 
   [simValor, simEntrada, simPrazo].forEach(el => el.addEventListener('input', atualizarPreview));
-
-  // ===== FUNDO ANIMADO WEBGL — MESH DRIFT =====
-  (() => {
-    const canvas = document.getElementById('global-shader');
-    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const gl = canvas.getContext('webgl', { antialias:false, alpha:false, powerPreference:'high-performance' });
-    if (!gl) return;
-
-    const vertexSource = `attribute vec2 p; void main(){ gl_Position=vec4(p,0.0,1.0); }`;
-    const fragmentSource = `
-      precision mediump float;
-      uniform vec2 u_res;
-      uniform float u_time;
-      uniform vec2 u_mouse;
-
-      float hash(vec2 p){
-        p=fract(p*vec2(234.34,435.345));
-        p+=dot(p,p+34.23);
-        return fract(p.x*p.y);
-      }
-      float noise(vec2 p){
-        vec2 i=floor(p), f=fract(p);
-        f=f*f*(3.0-2.0*f);
-        return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),f.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),f.x),f.y);
-      }
-      float fbm(vec2 p){
-        float v=0.0,a=.5;
-        for(int i=0;i<5;i++){ v+=a*noise(p); p=p*2.03+vec2(17.0,9.2); a*=.5; }
-        return v;
-      }
-      vec3 shade(vec2 p,float t){
-        vec3 c0=vec3(.012,.110,.149);
-        vec3 c1=vec3(.106,.424,.659);
-        vec3 c2=vec3(.353,.824,.957);
-        vec3 c3=vec3(.918,.976,1.0);
-        vec3 acc=c0*.15; float total=.15;
-        for(int i=0;i<4;i++){
-          float fi=float(i);
-          vec2 c=vec2(sin(t*(.21+fi*.071)+fi*2.4),cos(t*(.17+fi*.093)+fi*1.7))*(.45+.56*.35);
-          float w=exp(-dot(p-c,p-c)*6.0);
-          acc += (i==0?c0:(i==1?c1:(i==2?c2:c3)))*w;
-          total += w;
-        }
-        return acc/total;
-      }
-      void main(){
-        vec2 uv=gl_FragCoord.xy/u_res;
-        vec2 p=(gl_FragCoord.xy-.5*u_res)/min(u_res.x,u_res.y);
-        vec2 mouse=(.5*u_mouse*u_res)/min(u_res.x,u_res.y);
-        float md=length(p-mouse);
-        p += normalize(p-mouse)*(.025/(1.0+md*10.0));
-        p*=1.3;
-        p += vec2(.09,.15) + .148*vec2(sin(u_time*.31),cos(u_time*.23));
-        p += .192*(vec2(fbm(p*2.016+5069.0),fbm(p*2.016+vec2(5.2,1.3)))-.5);
-        vec3 col=shade(p,u_time);
-        float luma=dot(col,vec3(.299,.587,.114));
-        col=mix(vec3(luma),col,1.0);
-        float vd=length(uv-.5)*1.4142;
-        col*=1.0-.15*smoothstep(.35,1.0,vd);
-        float grain=hash(gl_FragCoord.xy+vec2(5069.0*17.0,5069.0*31.0));
-        col+=(grain-.5)*.018;
-        gl_FragColor=vec4(clamp(col,0.0,1.0),1.0);
-      }
-    `;
-
-    function compile(type, source){
-      const shader=gl.createShader(type);
-      if(!shader) return null;
-      gl.shaderSource(shader,source); gl.compileShader(shader);
-      if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)){ gl.deleteShader(shader); return null; }
-      return shader;
-    }
-    const vs=compile(gl.VERTEX_SHADER,vertexSource), fs=compile(gl.FRAGMENT_SHADER,fragmentSource);
-    if(!vs||!fs) return;
-    const program=gl.createProgram();
-    if(!program) return;
-    gl.attachShader(program,vs); gl.attachShader(program,fs); gl.linkProgram(program);
-    if(!gl.getProgramParameter(program,gl.LINK_STATUS)) return;
-    gl.useProgram(program);
-
-    const buffer=gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
-    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
-    const pos=gl.getAttribLocation(program,'p');
-    gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
-
-    const resLoc=gl.getUniformLocation(program,'u_res');
-    const timeLoc=gl.getUniformLocation(program,'u_time');
-    const mouseLoc=gl.getUniformLocation(program,'u_mouse');
-    let mx=0,my=0,targetX=0,targetY=0,start=performance.now(),raf=0,visible=true;
-
-    function resize(){
-      const dpr=Math.min(window.devicePixelRatio||1,1.5);
-      const w=Math.max(1,Math.round(canvas.clientWidth*dpr));
-      const h=Math.max(1,Math.round(canvas.clientHeight*dpr));
-      if(canvas.width!==w||canvas.height!==h){ canvas.width=w; canvas.height=h; gl.viewport(0,0,w,h); }
-    }
-    function pointer(e){
-      const r=canvas.getBoundingClientRect();
-      targetX=((e.clientX-r.left)/r.width)*2-1;
-      targetY=-(((e.clientY-r.top)/r.height)*2-1);
-    }
-    function render(now){
-      raf=0; if(!visible) return;
-      resize();
-      const ease=.055; mx+=(targetX-mx)*ease; my+=(targetY-my)*ease;
-      gl.uniform2f(resLoc,canvas.width,canvas.height);
-      gl.uniform1f(timeLoc,(now-start)/1000*-1.373);
-      gl.uniform2f(mouseLoc,mx,my);
-      gl.drawArrays(gl.TRIANGLES,0,3);
-      raf=requestAnimationFrame(render);
-    }
-    window.addEventListener('resize',resize,{passive:true});
-    window.addEventListener('pointermove',pointer,{passive:true});
-    document.addEventListener('visibilitychange',()=>{ visible=document.visibilityState==='visible'; if(visible&&!raf) raf=requestAnimationFrame(render); });
-    resize(); raf=requestAnimationFrame(render);
-  })();
 
   // ===== SIMULAÇÃO -> WHATSAPP =====
   simForm.addEventListener('submit', function(e){
